@@ -1,0 +1,561 @@
+/* ============================================================
+   ManageTests.css — PrepFlow Admin Panel
+   Scoped prefix: manage-tests-
+   ============================================================ */
+
+@keyframes admin-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Page wrapper ─────────────────────────────────────────── */
+.manage-tests-page {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  max-width: none;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.manage-tests-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 0;
+}
+
+.manage-tests-eyebrow {
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #6366f1;
+}
+
+.manage-tests-header h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #172033;
+  margin: 6px 0 6px;
+  letter-spacing: -0.5px;
+}
+
+.manage-tests-header p {
+  font-size: 14px;
+  color: #718096;
+  margin: 0;
+}
+
+/* ── Alert ────────────────────────────────────────────────── */
+.manage-tests-alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  border: 1px solid transparent;
+}
+
+.manage-tests-alert.error {
+  background: #fff5f5;
+  border-color: #fee2e2;
+  color: #dc2626;
+}
+
+.manage-tests-alert.success {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #059669;
+}
+
+.manage-tests-alert button {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  color: inherit;
+  transition: background 0.15s;
+}
+
+.manage-tests-alert button:hover {
+  background: rgb(0 0 0 / 6%);
+}
+
+/* ── Stats ────────────────────────────────────────────────── */
+.manage-tests-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.manage-tests-stat-card {
+  background: #ffffff;
+  border: 1px solid #e8ebf2;
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 5%);
+}
+
+/* ── Stat icon (default = indigo) ─────────────────────────── */
+.manage-tests-stat-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  flex-shrink: 0;
+  color: #4f46e5;
+  background: #eeeeff;
+}
+
+.manage-tests-stat-icon.published {
+  color: #059669;
+  background: #ecfdf5;
+}
+
+.manage-tests-stat-icon.drafts {
+  color: #ea580c;
+  background: #fff7ed;
+}
+
+.manage-tests-stat-card p {
+  font-size: 12px;
+  color: #718096;
+  margin: 0 0 4px;
+}
+
+.manage-tests-stat-card strong {
+  font-size: 24px;
+  color: #172033;
+  font-weight: 750;
+}
+
+/* ── Panel ────────────────────────────────────────────────── */
+.manage-tests-panel {
+  background: #ffffff;
+  border: 1px solid #e8ebf2;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 5%);
+}
+
+.manage-tests-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f0f1f5;
+  margin-bottom: 20px;
+}
+
+.manage-tests-panel h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #172033;
+  margin: 0 0 4px;
+}
+
+.manage-tests-panel p.manage-tests-panel-subtitle {
+  font-size: 13px;
+  color: #718096;
+  margin: 0;
+}
+
+/* ── Form grid ────────────────────────────────────────────── */
+.manage-tests-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.manage-tests-form-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.manage-tests-form-grid .full-width {
+  grid-column: 1 / -1;
+}
+
+.manage-tests-form-grid input,
+.manage-tests-form-grid select,
+.manage-tests-form-grid textarea {
+  width: 100%;
+  padding: 10px 13px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #172033;
+  background: #ffffff;
+  box-sizing: border-box;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.manage-tests-form-grid input:focus,
+.manage-tests-form-grid select:focus,
+.manage-tests-form-grid textarea:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgb(99 102 241 / 12%);
+}
+
+/* ── Form actions ─────────────────────────────────────────── */
+.manage-tests-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 16px;
+}
+
+/* ── Buttons ──────────────────────────────────────────────── */
+.manage-tests-primary-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+  border: none;
+  color: #ffffff;
+  background: #6366f1;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.manage-tests-primary-button:hover {
+  background: #4f46e5;
+}
+
+.manage-tests-primary-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.manage-tests-secondary-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+  background: #ffffff;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.manage-tests-secondary-button:hover {
+  background: #f9fafb;
+}
+
+/* ── Icon button ──────────────────────────────────────────── */
+.manage-tests-icon-button {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #64748b;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+  padding: 0;
+}
+
+.manage-tests-icon-button:hover {
+  color: #4f46e5;
+  background: #f5f5ff;
+  border-color: #c7d2fe;
+}
+
+.manage-tests-icon-button.delete:hover {
+  color: #dc2626;
+  background: #fff5f5;
+  border-color: #fecaca;
+}
+
+/* ── Refresh button (icon-only, 36×36) ───────────────────── */
+.manage-tests-refresh {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #64748b;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.manage-tests-refresh:hover {
+  background: #f5f5ff;
+  color: #4f46e5;
+  border-color: #c7d2fe;
+}
+
+.manage-tests-refresh:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── List heading / header ────────────────────────────────── */
+.manage-tests-list-header,
+.manage-tests-list-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+/* ── List controls ────────────────────────────────────────── */
+.manage-tests-list-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ── Search ───────────────────────────────────────────────── */
+.manage-tests-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  max-width: 320px;
+  padding: 9px 13px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #9ca3af;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.manage-tests-search:focus-within {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgb(99 102 241 / 12%);
+}
+
+.manage-tests-search input {
+  border: none;
+  outline: none;
+  background: transparent;
+  flex: 1;
+  font-size: 14px;
+  color: #172033;
+  font-family: inherit;
+}
+
+.manage-tests-search input::placeholder {
+  color: #9ca3af;
+}
+
+/* ── Table ────────────────────────────────────────────────── */
+.manage-tests-table-wrapper {
+  overflow-x: auto;
+}
+
+.manage-tests-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.manage-tests-table th {
+  text-align: left;
+  padding: 11px 16px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #9ca3af;
+  letter-spacing: 0.8px;
+  border-bottom: 2px solid #f0f1f5;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.manage-tests-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f5f7fb;
+  color: #374151;
+  vertical-align: middle;
+}
+
+.manage-tests-table tr:last-child td {
+  border-bottom: none;
+}
+
+.manage-tests-table tbody tr:hover {
+  background: #fafbff;
+}
+
+/* ── Title cell ───────────────────────────────────────────── */
+.manage-tests-title-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ── Test icon ────────────────────────────────────────────── */
+.manage-tests-test-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  color: #4f46e5;
+  background: #eeeeff;
+  flex-shrink: 0;
+}
+
+.manage-tests-test-icon div strong {
+  font-size: 14px;
+  display: block;
+  color: #172033;
+}
+
+.manage-tests-test-icon div span {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* ── Difficulty badge ─────────────────────────────────────── */
+.manage-tests-difficulty {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.manage-tests-difficulty.easy {
+  color: #059669;
+  background: #ecfdf5;
+}
+
+.manage-tests-difficulty.medium {
+  color: #d97706;
+  background: #fffbeb;
+}
+
+.manage-tests-difficulty.hard {
+  color: #dc2626;
+  background: #fff5f5;
+}
+
+/* ── Status badge ─────────────────────────────────────────── */
+.manage-tests-status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.manage-tests-status.published {
+  color: #059669;
+  background: #ecfdf5;
+}
+
+.manage-tests-status.draft {
+  color: #92400e;
+  background: #fff7ed;
+}
+
+/* ── Actions cell ─────────────────────────────────────────── */
+.manage-tests-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Empty state ──────────────────────────────────────────── */
+.manage-tests-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 60px 20px;
+  color: #9ca3af;
+  text-align: center;
+}
+
+.manage-tests-empty strong {
+  font-size: 16px;
+  color: #374151;
+}
+
+.manage-tests-empty p {
+  font-size: 14px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+/* ── Spinner ──────────────────────────────────────────────── */
+.manage-tests-spin {
+  animation: admin-spin 0.9s linear infinite;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .manage-tests-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .manage-tests-form-grid .full-width {
+    grid-column: 1;
+  }
+
+  .manage-tests-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .manage-tests-list-header,
+  .manage-tests-list-heading {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .manage-tests-search {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .manage-tests-list-controls {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .manage-tests-stats {
+    grid-template-columns: 1fr;
+  }
+}

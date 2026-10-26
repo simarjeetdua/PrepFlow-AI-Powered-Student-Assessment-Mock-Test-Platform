@@ -73,7 +73,24 @@ const LoginForm = () => {
             }
 
             // Redirect to dashboard
-            navigate("/dashboard");
+           // Get the logged-in user
+const student =
+    response.data.student ||
+    response.data.data?.student ||
+    response.data.user ||
+    response.data.data?.user;
+
+// Store student information
+if (student) {
+    localStorage.setItem("student", JSON.stringify(student));
+}
+
+// Redirect based on role
+if (student?.role === "admin") {
+    navigate("/admin", { replace: true });
+} else {
+    navigate("/dashboard", { replace: true });
+}
 
         } catch (error) {
             console.error("Login error:", error);

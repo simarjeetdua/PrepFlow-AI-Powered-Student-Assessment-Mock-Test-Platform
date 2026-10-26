@@ -1,0 +1,259 @@
+
+/* Admin layout */
+.admin-layout {
+  --admin-primary: #6366f1;
+  --admin-primary-dark: #4f46e5;
+  --admin-text: #172033;
+  --admin-muted: #718096;
+  --admin-border: #e5e7eb;
+  --admin-surface: #ffffff;
+  --admin-background: #f5f7fb;
+
+  display: flex;
+  min-height: 100vh;
+  background: var(--admin-background);
+  color: var(--admin-text);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+.admin-sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  width: 260px;
+  height: 100dvh;
+  background: var(--admin-surface);
+  border-right: 1px solid var(--admin-border);
+  transition: transform 0.25s ease;
+}
+
+.admin-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 82px;
+  padding: 20px;
+  border-bottom: 1px solid #f0f1f5;
+}
+
+.admin-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: var(--admin-text);
+  text-decoration: none;
+}
+
+.admin-brand-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  color: white;
+  background: var(--admin-primary);
+  border-radius: 12px;
+}
+
+.admin-brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.admin-brand-text strong {
+  font-size: 19px;
+  font-weight: 750;
+  letter-spacing: -0.5px;
+}
+
+.admin-brand-text small {
+  color: var(--admin-muted);
+  font-size: 12px;
+}
+
+.admin-sidebar-close {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  color: var(--admin-muted);
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.admin-sidebar-section {
+  flex: 1;
+  overflow-y: auto;
+  padding: 27px 14px;
+}
+
+.admin-sidebar-label {
+  display: block;
+  padding: 0 12px;
+  margin-bottom: 13px;
+  color: #9ca3af;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 1.5px;
+}
+
+.admin-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  color: #687386;
+  font-size: 13px;
+  font-weight: 550;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.admin-nav-link:hover {
+  color: var(--admin-primary-dark);
+  background: #f4f4ff;
+}
+
+.admin-nav-link.active {
+  color: var(--admin-primary-dark);
+  background: #eeeeff;
+  font-weight: 700;
+}
+
+.admin-sidebar-footer {
+  padding: 17px 14px;
+  border-top: 1px solid var(--admin-border);
+}
+
+.admin-sidebar-profile {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 8px 5px 16px;
+}
+
+.admin-profile-avatar {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 39px;
+  height: 39px;
+  color: var(--admin-primary-dark);
+  background: #eeeeff;
+  border-radius: 50%;
+}
+
+.admin-profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.admin-profile-info strong {
+  font-size: 12px;
+}
+
+.admin-profile-info span {
+  color: var(--admin-muted);
+  font-size: 11px;
+}
+
+.admin-logout-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  padding: 11px;
+  color: #dc2626;
+  background: #fff5f5;
+  border: 1px solid #fee2e2;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.admin-logout-button:hover {
+  background: #fee2e2;
+}
+
+.admin-main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 100vh;
+  margin-left: 260px;
+}
+
+.admin-content {
+  flex: 1;
+  width: 100%;
+  max-width: 1600px;
+  padding: 30px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.admin-sidebar-overlay {
+  display: none;
+}
+
+/* Responsive sidebar */
+@media (max-width: 900px) {
+  .admin-sidebar {
+    transform: translateX(-100%);
+    box-shadow: none;
+  }
+
+  .admin-sidebar.admin-sidebar-open {
+    transform: translateX(0);
+    box-shadow: 12px 0 40px rgb(15 23 42 / 12%);
+  }
+
+  .admin-sidebar-close {
+    display: flex;
+  }
+
+  .admin-main {
+    margin-left: 0;
+  }
+
+  .admin-sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    display: block;
+    background: rgb(15 23 42 / 45%);
+    border: 0;
+  }
+
+  .admin-content {
+    padding: 22px;
+  }
+}
+
+@media (max-width: 520px) {
+  .admin-content {
+    padding: 16px;
+  }
+
+  .admin-sidebar {
+    width: min(280px, 85vw);
+  }
+}

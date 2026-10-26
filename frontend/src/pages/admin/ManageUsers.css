@@ -1,0 +1,429 @@
+/* ============================================================
+   ManageUsers.css — PrepFlow Admin Panel
+   Prefix: manage-users-
+   ============================================================ */
+
+/* ── Page Layout ─────────────────────────────────────────── */
+.manage-users-page {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+.manage-users-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.manage-users-eyebrow {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #6366f1;
+  margin-bottom: 6px;
+}
+
+.manage-users-header h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #172033;
+  margin: 0 0 6px;
+  letter-spacing: -0.5px;
+}
+
+.manage-users-header p {
+  font-size: 14px;
+  color: #718096;
+  margin: 0;
+}
+
+/* ── Refresh Button ──────────────────────────────────────── */
+.manage-users-refresh {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.manage-users-refresh:hover {
+  background: #f9fafb;
+}
+
+.manage-users-refresh:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Alert ───────────────────────────────────────────────── */
+.manage-users-alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.manage-users-alert.error {
+  background: #fff5f5;
+  border: 1px solid #fee2e2;
+  color: #dc2626;
+}
+
+.manage-users-alert.success {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #059669;
+}
+
+.manage-users-alert button {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.15s ease;
+}
+
+.manage-users-alert.error button:hover {
+  background: #fee2e2;
+}
+
+.manage-users-alert.success button:hover {
+  background: #a7f3d0;
+}
+
+/* ── Stats Grid ──────────────────────────────────────────── */
+.manage-users-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.manage-users-stat-card {
+  background: #ffffff;
+  border: 1px solid #e8ebf2;
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 5%);
+}
+
+.manage-users-stat-card p {
+  font-size: 12px;
+  color: #718096;
+  margin: 0 0 4px;
+}
+
+.manage-users-stat-card strong {
+  font-size: 24px;
+  color: #172033;
+  font-weight: 750;
+}
+
+/* ── Stat Icons ──────────────────────────────────────────── */
+.manage-users-stat-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #eeeeff;
+  color: #4f46e5;
+}
+
+.manage-users-stat-icon.students {
+  background: #eff6ff;
+  color: #3b82f6;
+}
+
+.manage-users-stat-icon.teachers {
+  background: #f3e8ff;
+  color: #9333ea;
+}
+
+.manage-users-stat-icon.admins {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+/* ── Panel ───────────────────────────────────────────────── */
+.manage-users-panel {
+  background: #ffffff;
+  border: 1px solid #e8ebf2;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 5%);
+}
+
+.manage-users-panel h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #172033;
+  margin: 0 0 4px;
+}
+
+.manage-users-panel > div p {
+  font-size: 13px;
+  color: #718096;
+  margin: 0;
+}
+
+/* ── List Header ─────────────────────────────────────────── */
+.manage-users-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+/* ── Controls ────────────────────────────────────────────── */
+.manage-users-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ── Search ──────────────────────────────────────────────── */
+.manage-users-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  max-width: 320px;
+  padding: 9px 13px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #ffffff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.manage-users-search:focus-within {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgb(99 102 241 / 12%);
+}
+
+.manage-users-search input {
+  border: none;
+  outline: none;
+  background: transparent;
+  flex: 1;
+  font-size: 14px;
+  color: #172033;
+}
+
+.manage-users-search input::placeholder {
+  color: #9ca3af;
+}
+
+/* ── Role Filter ─────────────────────────────────────────── */
+.manage-users-role-filter {
+  padding: 9px 13px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #172033;
+  background: #ffffff;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.manage-users-role-filter:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgb(99 102 241 / 12%);
+}
+
+/* ── Table Wrapper ───────────────────────────────────────── */
+.manage-users-table-wrapper {
+  overflow-x: auto;
+}
+
+/* ── Table ───────────────────────────────────────────────── */
+.manage-users-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.manage-users-table th {
+  text-align: left;
+  padding: 11px 16px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #9ca3af;
+  letter-spacing: 0.8px;
+  border-bottom: 2px solid #f0f1f5;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.manage-users-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f5f7fb;
+  color: #374151;
+  vertical-align: middle;
+}
+
+.manage-users-table tr:last-child td {
+  border-bottom: none;
+}
+
+.manage-users-table tbody tr:hover {
+  background: #fafbff;
+}
+
+/* ── Empty State ─────────────────────────────────────────── */
+.manage-users-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 60px 20px;
+  color: #9ca3af;
+  text-align: center;
+}
+
+.manage-users-empty strong {
+  font-size: 16px;
+  color: #374151;
+}
+
+.manage-users-empty p {
+  font-size: 14px;
+}
+
+/* ── Spinner ─────────────────────────────────────────────── */
+.manage-users-spin {
+  animation: admin-spin 0.9s linear infinite;
+}
+
+@keyframes admin-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── User Cell ───────────────────────────────────────────── */
+.manage-users-user-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.manage-users-user-cell strong {
+  font-size: 14px;
+  color: #172033;
+}
+
+/* ── Avatar ──────────────────────────────────────────────── */
+.manage-users-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #eeeeff;
+  color: #4f46e5;
+  font-size: 14px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+/* ── Email ───────────────────────────────────────────────── */
+.manage-users-email {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #718096;
+}
+
+.manage-users-email svg {
+  flex-shrink: 0;
+  color: #9ca3af;
+}
+
+/* ── Role Badge ──────────────────────────────────────────── */
+.manage-users-role {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.manage-users-role.student {
+  color: #3b82f6;
+  background: #eff6ff;
+}
+
+.manage-users-role.teacher {
+  color: #9333ea;
+  background: #f3e8ff;
+}
+
+.manage-users-role.admin {
+  color: #059669;
+  background: #ecfdf5;
+}
+
+/* ── Protected Indicator ─────────────────────────────────── */
+.manage-users-protected {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+/* ── Delete Button ───────────────────────────────────────── */
+.manage-users-delete {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1px solid #fee2e2;
+  background: #fff5f5;
+  color: #dc2626;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.manage-users-delete:hover {
+  background: #fee2e2;
+}
+
+.manage-users-delete:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

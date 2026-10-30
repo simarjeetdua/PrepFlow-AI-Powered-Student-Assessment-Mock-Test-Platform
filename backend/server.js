@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-
+import { generateMistralResponse } from "./services/mistralService.js"
 dotenv.config();
 
 import app from "./app.js";
@@ -19,5 +19,15 @@ const startServer = async () => {
         process.exit(1);
     }
 };
+
+const testAI = async ()=>{
+    const response = await generateMistralResponse(
+        "Explain MCP server in simple words"
+    )
+    console.log("Mistral Response:", response)
+};
+
+testAI();
+
 
 startServer();

@@ -1,317 +1,455 @@
 /* ============================================================
    AdminDashboard.css — PrepFlow Admin Panel
-   Prefix: admin-
+   Written to match the class names used in AdminDashboard.jsx
    ============================================================ */
-
-/* ── Page Layout ─────────────────────────────────────────── */
-.admin-dashboard-page {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-/* ── Welcome Section ─────────────────────────────────────── */
-.admin-welcome-section {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-  padding: 28px 32px;
-  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-  border-radius: 20px;
-  color: #ffffff;
-  box-shadow: 0 8px 24px rgb(99 102 241 / 25%);
-}
-
-.admin-welcome-content {
-  flex: 1;
-  min-width: 0;
-}
-
-/* ── Eyebrow (inside welcome section) ───────────────────── */
-.admin-eyebrow {
-  display: block;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: rgb(255 255 255 / 75%);
-  margin-bottom: 8px;
-}
-
-.admin-welcome-section h1 {
-  font-size: 28px;
-  font-weight: 800;
-  color: #ffffff;
-  margin: 0 0 10px;
-  letter-spacing: -0.5px;
-}
-
-.admin-welcome-section p {
-  font-size: 15px;
-  color: rgb(255 255 255 / 80%);
-  margin: 0;
-  line-height: 1.5;
-}
-
-.admin-welcome-icon {
-  color: rgb(255 255 255 / 30%);
-  flex-shrink: 0;
-}
-
-/* ── Dashboard Section ───────────────────────────────────── */
-.admin-dashboard-section {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* ── Section Heading ─────────────────────────────────────── */
-.admin-section-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.admin-section-heading h2 {
-  font-size: 18px;
-  font-weight: 750;
-  color: #172033;
-  margin: 0 0 4px;
-}
-
-.admin-section-heading p {
-  font-size: 13px;
-  color: #718096;
-  margin: 0;
-}
-
-/* ── Refresh Button ──────────────────────────────────────── */
-.admin-refresh-button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  background: #ffffff;
-  font-size: 13px;
-  font-weight: 600;
-  color: #374151;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-
-.admin-refresh-button:hover {
-  background: #f9fafb;
-}
-
-.admin-refresh-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* ── Spinner ─────────────────────────────────────────────── */
-.admin-spin {
-  animation: admin-spin 0.9s linear infinite;
-}
-
+ 
 @keyframes admin-spin {
   to {
     transform: rotate(360deg);
   }
 }
-
-/* ── Dashboard Error ─────────────────────────────────────── */
-.admin-dashboard-error {
-  padding: 16px 20px;
-  border-radius: 12px;
-  background: #fff5f5;
-  border: 1px solid #fee2e2;
+ 
+@keyframes admin-dashboard-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+ 
+.admin-spin {
+  animation: admin-spin 0.9s linear infinite;
+}
+ 
+/* ── Page ────────────────────────────────────────────────── */
+.admin-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  min-width: 0;
+  color: #161b2e;
+}
+ 
+/* ── Welcome banner ──────────────────────────────────────── */
+.admin-dashboard-welcome {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 20px;
+  padding: clamp(20px, 3vw, 32px);
+  color: #ffffff;
+  background: #4f46e5;
+  border-radius: 18px;
 }
-
-.admin-dashboard-error p {
-  font-size: 14px;
-  color: #dc2626;
-  margin: 0;
-}
-
-.admin-dashboard-error button {
-  padding: 7px 14px;
-  border-radius: 8px;
-  border: 1px solid #fecaca;
-  background: #ffffff;
-  color: #dc2626;
-  font-size: 13px;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: background 0.15s ease;
-}
-
-.admin-dashboard-error button:hover {
-  background: #fff5f5;
-}
-
-/* ── Stats Grid ──────────────────────────────────────────── */
-.admin-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-}
-
-/* ── Quick Actions Grid ──────────────────────────────────── */
-.admin-quick-actions-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
-}
-
-/* ── Quick Action Card ───────────────────────────────────── */
-.admin-quick-action-card {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  width: 100%;
-  padding: 20px 22px;
-  text-align: left;
-  background: #ffffff;
-  border: 1px solid #e8ebf2;
-  border-radius: 16px;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgb(15 23 42 / 5%);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.admin-quick-action-card:hover {
-  border-color: #c7d2fe;
-  box-shadow: 0 8px 24px rgb(99 102 241 / 10%);
-  transform: translateY(-2px);
-}
-
-/* ── Quick Action Icon ───────────────────────────────────── */
-.admin-quick-action-icon {
-  width: 48px;
-  height: 48px;
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  border-radius: 14px;
-}
-
-.admin-quick-action-icon.blue {
-  background: #eeeeff;
-  color: #4f46e5;
-}
-
-.admin-quick-action-icon.purple {
-  background: #f3e8ff;
-  color: #9333ea;
-}
-
-.admin-quick-action-icon.green {
-  background: #ecfdf5;
-  color: #059669;
-}
-
-.admin-quick-action-icon.orange {
-  background: #fff7ed;
-  color: #ea580c;
-}
-
-/* ── Quick Action Content ────────────────────────────────── */
-.admin-quick-action-content {
+ 
+.admin-dashboard-welcome-content {
   flex: 1;
   min-width: 0;
-  text-align: left;
 }
-
-.admin-quick-action-content h3 {
-  font-size: 15px;
+ 
+.admin-dashboard-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  color: rgb(255 255 255 / 80%);
+  font-size: 12px;
   font-weight: 700;
-  color: #172033;
-  margin: 0 0 4px;
+  letter-spacing: 0.08em;
 }
-
-.admin-quick-action-content p {
-  font-size: 13px;
-  color: #718096;
+ 
+.admin-dashboard-welcome h1 {
+  margin: 0 0 8px;
+  color: #ffffff;
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+ 
+.admin-dashboard-welcome p {
+  max-width: 56ch;
   margin: 0;
+  color: rgb(255 255 255 / 85%);
+  font-size: 15px;
+  line-height: 1.55;
 }
-
-/* ── Quick Action Arrow ──────────────────────────────────── */
-.admin-quick-action-arrow {
-  color: #9ca3af;
+ 
+.admin-dashboard-welcome-icon {
+  display: grid;
   flex-shrink: 0;
-  transition: transform 0.2s ease, color 0.2s ease;
+  place-items: center;
+  color: rgb(255 255 255 / 35%);
 }
-
-.admin-quick-action-card:hover .admin-quick-action-arrow {
-  transform: translateX(4px);
-  color: #6366f1;
+ 
+/* ── Sections ────────────────────────────────────────────── */
+.admin-dashboard-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
 }
-
-/* ── Dashboard Footer ────────────────────────────────────── */
-.admin-dashboard-footer {
+ 
+.admin-dashboard-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+}
+ 
+.admin-dashboard-section-header h2 {
+  margin: 0 0 3px;
+  font-size: 18px;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+}
+ 
+.admin-dashboard-section-header p {
+  margin: 0;
+  color: #667085;
+  font-size: 14px;
+}
+ 
+/* ── Refresh button ──────────────────────────────────────── */
+.admin-dashboard-refresh {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 16px;
+  color: #161b2e;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 650;
+  background: #ffffff;
+  border: 1px solid #e3e6ee;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+ 
+.admin-dashboard-refresh:hover:not(:disabled) {
+  background: #f8f9fd;
+  border-color: #cfd4e2;
+}
+ 
+.admin-dashboard-refresh:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+ 
+/* ── Error banner ────────────────────────────────────────── */
+.admin-dashboard-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  color: #b91c1c;
+  font-size: 14px;
+  line-height: 1.45;
+  background: #fdecec;
+  border: 1px solid #f6c9c9;
+  border-radius: 10px;
+}
+ 
+.admin-dashboard-error svg {
+  flex-shrink: 0;
+}
+ 
+.admin-dashboard-error span {
+  flex: 1;
+  min-width: 0;
+}
+ 
+.admin-dashboard-error button {
+  flex-shrink: 0;
+  min-height: 34px;
+  padding: 0 14px;
+  color: #b91c1c;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  background: #ffffff;
+  border: 1px solid #f6c9c9;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+ 
+.admin-dashboard-error button:hover:not(:disabled) {
+  background: #fff5f5;
+}
+ 
+.admin-dashboard-error button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+ 
+/* ── Stat cards ──────────────────────────────────────────── */
+.admin-dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+ 
+.admin-dashboard-stat-wrapper {
+  display: flex;
+  min-width: 0;
+}
+ 
+.admin-dashboard-stat-wrapper > * {
+  flex: 1;
+  min-width: 0;
+}
+ 
+/* Loading skeleton: icon block + two text lines */
+.admin-dashboard-stat-skeleton {
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  grid-template-rows: 14px 24px;
+  gap: 10px 14px;
+  align-content: center;
+  min-height: 98px;
+  padding: 18px;
+  background: #ffffff;
+  border: 1px solid #e3e6ee;
+  border-radius: 14px;
+}
+ 
+.admin-dashboard-stat-skeleton div {
+  background: linear-gradient(90deg, #eceef4 25%, #f6f7fb 50%, #eceef4 75%);
+  background-size: 200% 100%;
+  border-radius: 8px;
+  animation: admin-dashboard-shimmer 1.3s linear infinite;
+}
+ 
+.admin-dashboard-stat-skeleton div:nth-child(1) {
+  grid-row: 1 / 3;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+}
+ 
+.admin-dashboard-stat-skeleton div:nth-child(2) {
+  width: 60%;
+}
+ 
+.admin-dashboard-stat-skeleton div:nth-child(3) {
+  width: 35%;
+}
+ 
+/* ── Quick actions ───────────────────────────────────────── */
+.admin-dashboard-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 14px;
+}
+ 
+.admin-dashboard-action {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 20px 24px;
+  width: 100%;
+  padding: 16px 18px;
+  color: inherit;
+  font: inherit;
+  text-align: left;
   background: #ffffff;
-  border: 1px solid #e8ebf2;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgb(15 23 42 / 5%);
+  border: 1px solid #e3e6ee;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
 }
-
-.admin-footer-icon {
-  width: 44px;
-  height: 44px;
+ 
+.admin-dashboard-action:hover {
+  background: #f8f9fd;
+  border-color: #c7cdfa;
+}
+ 
+.admin-dashboard-action:focus-visible,
+.admin-dashboard-refresh:focus-visible,
+.admin-dashboard-error button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(79 70 229 / 28%);
+}
+ 
+.admin-dashboard-action-icon {
   display: grid;
-  place-items: center;
-  border-radius: 12px;
-  background: #eeeeff;
-  color: #4f46e5;
   flex-shrink: 0;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
 }
-
-.admin-dashboard-footer strong {
-  font-size: 14px;
+ 
+.admin-dashboard-action-icon.blue   { color: #4f46e5; background: #eef0ff; }
+.admin-dashboard-action-icon.purple { color: #7e22ce; background: #f3e8ff; }
+.admin-dashboard-action-icon.green  { color: #047857; background: #e4f6ee; }
+.admin-dashboard-action-icon.orange { color: #b45309; background: #fdf1dc; }
+ 
+.admin-dashboard-action-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+ 
+.admin-dashboard-action-content strong {
+  color: #161b2e;
+  font-size: 15px;
   font-weight: 700;
-  color: #172033;
-  display: block;
-  margin-bottom: 4px;
 }
-
-.admin-dashboard-footer p {
+ 
+.admin-dashboard-action-content span {
+  color: #667085;
   font-size: 13px;
-  color: #718096;
-  margin: 0;
+  line-height: 1.45;
 }
-
-/* ── Responsive: 768px ───────────────────────────────────── */
+ 
+.admin-dashboard-action-arrow {
+  flex-shrink: 0;
+  color: #98a2b3;
+  transition: transform 0.15s, color 0.15s;
+}
+ 
+.admin-dashboard-action:hover .admin-dashboard-action-arrow {
+  color: #4f46e5;
+  transform: translateX(3px);
+}
+ 
+/* ── Summary cards ───────────────────────────────────────── */
+.admin-dashboard-bottom-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+ 
+.admin-dashboard-summary-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  min-width: 0;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #e3e6ee;
+  border-radius: 14px;
+}
+ 
+.admin-dashboard-summary-icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  color: #4f46e5;
+  background: #eef0ff;
+  border-radius: 12px;
+}
+ 
+.admin-dashboard-summary-icon.materials {
+  color: #b45309;
+  background: #fdf1dc;
+}
+ 
+.admin-dashboard-summary-card h3 {
+  margin: 0 0 3px;
+  font-size: 16px;
+  font-weight: 700;
+}
+ 
+.admin-dashboard-summary-card p {
+  margin: 0 0 10px;
+  color: #667085;
+  font-size: 13px;
+}
+ 
+.admin-dashboard-summary-card strong {
+  display: block;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+ 
+.admin-dashboard-summary-caption {
+  display: block;
+  margin-top: 4px;
+  color: #667085;
+  font-size: 12px;
+}
+ 
+/* ── Footer ──────────────────────────────────────────────── */
+.admin-dashboard-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  padding: 16px 20px;
+  color: #667085;
+  font-size: 13px;
+  background: #ffffff;
+  border: 1px solid #e3e6ee;
+  border-radius: 14px;
+}
+ 
+.admin-dashboard-footer span:first-child {
+  color: #161b2e;
+  font-weight: 700;
+}
+ 
+/* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .admin-welcome-section {
-    padding: 20px 22px;
+  .admin-dashboard {
+    gap: 22px;
   }
-
-  .admin-welcome-section h1 {
-    font-size: 22px;
+ 
+  .admin-dashboard-bottom-grid {
+    grid-template-columns: 1fr;
   }
-
-  .admin-quick-actions-grid {
+ 
+  .admin-dashboard-actions {
     grid-template-columns: 1fr;
   }
 }
-
-/* ── Responsive: 520px ───────────────────────────────────── */
-@media (max-width: 520px) {
-  .admin-stats-grid {
-    grid-template-columns: repeat(2, 1fr);
+ 
+@media (max-width: 560px) {
+  .admin-dashboard-welcome-icon {
+    display: none;
+  }
+ 
+  .admin-dashboard-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+ 
+  .admin-dashboard-section-header {
+    align-items: flex-start;
+  }
+ 
+  .admin-dashboard-refresh {
+    width: 100%;
+  }
+ 
+  .admin-dashboard-error {
+    flex-wrap: wrap;
+  }
+ 
+  .admin-dashboard-error button {
+    width: 100%;
+  }
+ 
+  .admin-dashboard-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+ 
+@media (prefers-reduced-motion: reduce) {
+  .admin-dashboard *,
+  .admin-dashboard-stat-skeleton div {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }

@@ -1,13 +1,23 @@
 
 import express from "express";
+
 import { protect } from "../middleware/authMiddleware.js";
 import { authorizeRoles } from "../middleware/roleMiddleware.js";
-import { getDashboardStats } from "../controllers/adminController.js";
+
+import {
+  getDashboardStats,
+  getAllUsers,
+  deleteUser,
+} from "../controllers/adminController.js";
 
 const router = express.Router();
 
-// Temporary authorization test
-router.get("/test", protect, authorizeRoles("admin"), (req, res) => {
+// ADMIN AUTHORIZATION TEST
+router.get(
+  "/test",
+  protect,
+  authorizeRoles("admin"),
+  (req, res) => {
     res.status(200).json({
       success: true,
       message: "Admin authorization successful!",
@@ -21,12 +31,28 @@ router.get("/test", protect, authorizeRoles("admin"), (req, res) => {
   }
 );
 
-// Real dashboard statistics
+// ADMIN DASHBOARD STATISTICS
 router.get(
   "/dashboard/stats",
   protect,
   authorizeRoles("admin"),
   getDashboardStats
+);
+
+// GET ALL REGISTERED USERS
+router.get(
+  "/users",
+  protect,
+  authorizeRoles("admin"),
+  getAllUsers
+);
+
+// DELETE A USER
+router.delete(
+  "/users/:id",
+  protect,
+  authorizeRoles("admin"),
+  deleteUser
 );
 
 export default router;

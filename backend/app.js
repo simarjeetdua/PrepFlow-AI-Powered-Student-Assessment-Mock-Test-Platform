@@ -11,6 +11,7 @@ import questionRoutes from "./routes/questionRoutes.js";
 import resultRoutes from "./routes/resultRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import noteRoutes from "./routes/noteRoutes.js";
+import videoRoutes from "./routes/videoRoutes.js";
 
 import { errorHandler } from "./middleware/errorMiddleware.js";
 
@@ -46,6 +47,7 @@ app.use("/api/questions", questionRoutes);
 app.use("/api/results", resultRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/notes", noteRoutes);
+app.use("/api/videos", videoRoutes);
 
 app.use((req, res) => {
     res.status(404).json({

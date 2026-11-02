@@ -10,6 +10,7 @@ import {
   GraduationCap,
   X,
   LogOut,
+  CircleHelp,
 } from "lucide-react";
 
 import "./AdminSidebar.css";
@@ -46,6 +47,11 @@ const navigationItems = [
     path: "/admin/performance",
     icon: ChartNoAxesColumn,
   },
+    {
+    label: "Question Bank",
+    path: "/admin/questions",
+    icon: CircleHelp,
+    },
 ];
 
 const AdminSidebar = ({ isOpen = false, onClose = () => {} }) => {

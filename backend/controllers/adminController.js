@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import Student from "../models/Student.js";
 import MockTest from "../models/MockTest.js";
 import Note from "../models/Note.js";
+import TestResult from "../models/TestResult.js";
 
 // GET ADMIN DASHBOARD STATISTICS
 export const getDashboardStats = async (req, res) => {
@@ -114,3 +115,98 @@ export const deleteUser = async (req, res) => {
     });
   }
 };
+
+
+// GET STUDENT PERFORMANCE
+// GET /api/admin/performance
+export const getStudentPerformance = async (req, res) => {
+  try {
+    // Fetch all registered students (without passwords).
+    const students = await Student.find({
+      role: "student",
+    })
+      .select("name email createdAt")
+      .sort({ createdAt: -1 })
+      .lean();
+
+    // Aggregate test results student-wise.
+    const performanceData = await TestResult.aggregate([
+      {
+        $group: {
+          _id: "$student",
+
+          totalAttempts: {
+            $sum: 1,
+          },
+
+          averageScore: {
+            $avg: "$percentage",
+          },
+
+          bestScore: {
+            $max: "$percentage",
+          },
+
+          lastAttemptAt: {
+            $max: {
+              $ifNull: ["$submittedAt", "$createdAt"],
+            },
+          },
+        },
+      },
+    ]);
+
+    // Convert aggregated results into a lookup map.
+    const performanceMap = new Map(
+      performanceData.map((item) => [
+        item._id.toString(),
+        item,
+      ])
+    );
+
+    // Merge student profiles with performance data.
+    const result = students.map((student) => {
+      const performance = performanceMap.get(
+        student._id.toString()
+      );
+
+      return {
+        _id: student._id,
+        name: student.name,
+        email: student.email,
+        createdAt: student.createdAt,
+
+        totalAttempts: performance?.totalAttempts || 0,
+
+        averageScore: Number(
+          (performance?.averageScore || 0).toFixed(1)
+        ),
+
+        bestScore: Number(
+          (performance?.bestScore || 0).toFixed(1)
+        ),
+
+        lastAttemptAt:
+          performance?.lastAttemptAt || null,
+      };
+    });
+
+    return res.status(200).json({
+      success: true,
+      count: result.length,
+      students: result,
+    });
+
+  } catch (error) {
+    console.error(
+      "Student Performance Error:",
+      error
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch student performance.",
+    });
+  }
+};
+

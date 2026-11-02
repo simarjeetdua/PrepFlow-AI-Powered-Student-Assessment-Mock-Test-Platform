@@ -34,6 +34,9 @@ import ManageTests from "./pages/admin/ManageTests";
 import ManageUsers from "./pages/admin/ManageUsers";
 import ManageVideos from "./pages/admin/ManageVideos";
 import StudentPerformance from "./pages/admin/StudentPerformance";
+import QuestionBank from "./pages/admin/QuestionBank/QuestionBank";
+import StudyMaterials from "./pages/student/StudyMaterials";
+import VideoLessons from "./pages/student/VideoLessons";
 
 function App() {
   return (
@@ -77,6 +80,12 @@ function App() {
                   path="/mock-tests/:id/result/:resultId"
                   element={<TestResult />}
                 />
+                <Route path="/notes" 
+                element={<StudyMaterials />} 
+                />
+                <Route path="/videos"
+                 element={<VideoLessons />}
+                  />
               </Route>
 
               {/* Admin portal */}
@@ -107,6 +116,10 @@ function App() {
     <Route
       path="/admin/performance"
       element={<StudentPerformance />}
+    />
+    <Route
+      path="/admin/questions"
+      element={<QuestionBank />}
     />
   </Route>
 </Route>

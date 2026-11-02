@@ -8,6 +8,7 @@ import {
   getDashboardStats,
   getAllUsers,
   deleteUser,
+  getStudentPerformance,
 } from "../controllers/adminController.js";
 
 const router = express.Router();
@@ -53,6 +54,14 @@ router.delete(
   protect,
   authorizeRoles("admin"),
   deleteUser
+);
+
+// GET STUDENT PERFORMANCE
+router.get(
+  "/performance",
+  protect,
+  authorizeRoles("admin"),
+  getStudentPerformance
 );
 
 export default router;

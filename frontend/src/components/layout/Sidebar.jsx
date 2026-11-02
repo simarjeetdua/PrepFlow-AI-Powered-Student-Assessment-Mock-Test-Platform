@@ -1,10 +1,14 @@
+
 import {
     LayoutDashboard,
     ClipboardList,
     UserCircle,
     LogOut,
     X,
+    BookOpen,
+    PlayCircle,
 } from "lucide-react";
+
 import { NavLink, useNavigate } from "react-router-dom";
 
 const Sidebar = ({ isOpen, onClose }) => {
@@ -18,11 +22,38 @@ const Sidebar = ({ isOpen, onClose }) => {
     };
 
     const handleNavigation = () => {
-        // Close sidebar on mobile after selecting a page
         if (onClose) {
             onClose();
         }
     };
+
+    const navigationItems = [
+        {
+            path: "/dashboard",
+            label: "Dashboard",
+            icon: LayoutDashboard,
+        },
+        {
+            path: "/notes",
+            label: "Study Materials",
+            icon: BookOpen,
+        },
+        {
+            path: "/videos",
+            label: "Video Lessons",
+            icon: PlayCircle,
+        },
+        {
+            path: "/mock-tests",
+            label: "Mock Tests",
+            icon: ClipboardList,
+        },
+        {
+            path: "/profile",
+            label: "Profile",
+            icon: UserCircle,
+        },
+    ];
 
     return (
         <aside
@@ -43,7 +74,6 @@ const Sidebar = ({ isOpen, onClose }) => {
                     </div>
                 </div>
 
-                {/* Mobile close button */}
                 <button
                     type="button"
                     className="sidebar-close-button"
@@ -56,51 +86,29 @@ const Sidebar = ({ isOpen, onClose }) => {
 
             {/* Navigation */}
             <nav className="sidebar-navigation">
+                {navigationItems.map((item) => {
+                    const Icon = item.icon;
 
-                <NavLink
-                    to="/dashboard"
-                    onClick={handleNavigation}
-                    className={({ isActive }) =>
-                        `sidebar-link ${
-                            isActive ? "active" : ""
-                        }`
-                    }
-                >
-                    <LayoutDashboard size={19} />
-                    <span>Dashboard</span>
-                </NavLink>
-
-                <NavLink
-                    to="/mock-tests"
-                    onClick={handleNavigation}
-                    className={({ isActive }) =>
-                        `sidebar-link ${
-                            isActive ? "active" : ""
-                        }`
-                    }
-                >
-                    <ClipboardList size={19} />
-                    <span>Mock Tests</span>
-                </NavLink>
-
-                <NavLink
-                    to="/profile"
-                    onClick={handleNavigation}
-                    className={({ isActive }) =>
-                        `sidebar-link ${
-                            isActive ? "active" : ""
-                        }`
-                    }
-                >
-                    <UserCircle size={19} />
-                    <span>Profile</span>
-                </NavLink>
-
+                    return (
+                        <NavLink
+                            key={item.path}
+                            to={item.path}
+                            onClick={handleNavigation}
+                            className={({ isActive }) =>
+                                `sidebar-link ${
+                                    isActive ? "active" : ""
+                                }`
+                            }
+                        >
+                            <Icon size={19} />
+                            <span>{item.label}</span>
+                        </NavLink>
+                    );
+                })}
             </nav>
 
             {/* Sidebar Footer */}
             <div className="sidebar-footer">
-
                 <button
                     type="button"
                     onClick={handleLogout}
@@ -109,7 +117,6 @@ const Sidebar = ({ isOpen, onClose }) => {
                     <LogOut size={18} />
                     <span>Logout</span>
                 </button>
-
             </div>
         </aside>
     );

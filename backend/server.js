@@ -1,6 +1,5 @@
-import dotenv from "dotenv";
-import { generateMistralResponse } from "./services/mistralService.js"
-dotenv.config();
+
+import "dotenv/config";
 
 import app from "./app.js";
 import connectDB from "./config/db.js";
@@ -11,23 +10,26 @@ const startServer = async () => {
     try {
         await connectDB();
 
-        app.listen(PORT, () => {
-            console.log(`Server running on port ${PORT}`);
+        const server = app.listen(PORT, "0.0.0.0", () => {
+            console.log(`PrepFlow server running on port ${PORT}`);
         });
+
+        const shutdown = () => {
+            console.log("Shutting down server...");
+
+            server.close(() => {
+                console.log("Server closed.");
+                process.exit(0);
+            });
+        };
+
+        process.on("SIGTERM", shutdown);
+        process.on("SIGINT", shutdown);
+
     } catch (error) {
         console.error("Server startup error:", error);
         process.exit(1);
     }
 };
-
-const testAI = async ()=>{
-    const response = await generateMistralResponse(
-        "Explain MCP server in simple words"
-    )
-    console.log("Mistral Response:", response)
-};
-
-testAI();
-
 
 startServer();

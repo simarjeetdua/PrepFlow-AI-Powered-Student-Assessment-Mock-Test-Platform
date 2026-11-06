@@ -38,16 +38,22 @@ api.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response?.status === 401) {
-            localStorage.removeItem("token");
-            localStorage.removeItem("student");
 
+            // Don't clear authentication automatically for
+            // every endpoint returning an unauthorized response.
             const currentPath = window.location.pathname;
 
+            // Login and registration errors should remain
+            // on their respective pages.
             if (
                 currentPath !== "/login" &&
                 currentPath !== "/register"
             ) {
-                window.location.href = "/login";
+                // Let AuthContext and protected routes handle
+                // authentication state.
+                window.dispatchEvent(
+                    new CustomEvent("auth:unauthorized")
+                );
             }
         }
 

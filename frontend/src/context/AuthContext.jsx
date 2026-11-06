@@ -1,63 +1,91 @@
-import { createContext, useContext, useEffect, useState } from "react";
+
+import {
+    createContext,
+    useContext,
+    useEffect,
+    useState,
+} from "react";
+
 import api from "../services/api";
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-    const [student, setStudent] = useState(null);
+    const [student, setStudent] = useState(() => {
+        try {
+            const savedUser = localStorage.getItem("student");
+            return savedUser ? JSON.parse(savedUser) : null;
+        } catch {
+            return null;
+        }
+    });
+
     const [loading, setLoading] = useState(true);
 
-    const token = localStorage.getItem("token");
-
     useEffect(() => {
-        const loadStudent = async () => {
+        const loadUser = async () => {
+            const token = localStorage.getItem("token");
+
             if (!token) {
                 setStudent(null);
                 setLoading(false);
                 return;
             }
 
+            // If user information is already stored,
+            // do not assume every user is a student.
+            const savedUser = localStorage.getItem("student");
+
+            if (savedUser) {
+                setLoading(false);
+                return;
+            }
+
+            // Only attempt student profile recovery when
+            // the backend supports this profile endpoint.
             try {
                 const response = await api.get("/students/profile");
 
-                const studentData = response.data.student;
+                const user =
+                    response.data.student ||
+                    response.data.user ||
+                    response.data.data?.student ||
+                    response.data.data?.user ||
+                    null;
 
-                setStudent(studentData);
-
-                if (studentData) {
+                if (user) {
+                    setStudent(user);
                     localStorage.setItem(
                         "student",
-                        JSON.stringify(studentData)
+                        JSON.stringify(user)
                     );
                 }
             } catch (error) {
-                console.error(
-                    "Failed to load authenticated student:",
-                    error
-                );
+                console.error("Profile loading error:", error);
 
-                // Token may be invalid/expired.
-                localStorage.removeItem("token");
-                localStorage.removeItem("student");
-                setStudent(null);
+                // Do not automatically delete the token here.
+                // A non-student user may not have a student profile.
             } finally {
                 setLoading(false);
             }
         };
 
-        loadStudent();
-    }, [token]);
+        loadUser();
+    }, []);
 
-    const login = (token, studentData = null) => {
+    const login = (token, userData = null) => {
         localStorage.setItem("token", token);
 
-        if (studentData) {
+        if (userData) {
             localStorage.setItem(
                 "student",
-                JSON.stringify(studentData)
+                JSON.stringify(userData)
             );
 
-            setStudent(studentData);
+            setStudent(userData);
+        } else {
+            localStorage.removeItem("student");
+            setStudent(null);
         }
     };
 

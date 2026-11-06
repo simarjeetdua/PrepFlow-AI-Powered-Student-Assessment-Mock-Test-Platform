@@ -10,6 +10,7 @@ const pageTitles = {
   "/admin/tests": "Mock Tests",
   "/admin/users": "Manage Users",
   "/admin/performance": "Student Performance",
+  "/admin/questions": "Question Bank",
 };
 
 const AdminNavbar = ({ onMenuClick = () => {} }) => {

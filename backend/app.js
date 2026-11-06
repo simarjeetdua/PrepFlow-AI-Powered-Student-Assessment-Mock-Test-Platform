@@ -1,4 +1,3 @@
-
 import "dotenv/config";
 
 import express from "express";
@@ -21,11 +20,11 @@ import { errorHandler } from "./middleware/errorMiddleware.js";
 const app = express();
 
 // Allowed frontend origins.
-// Local development works by default.
-// Add your Vercel URL to CORS_ORIGINS in Render later.
-const allowedOrigins = (
-    process.env.CORS_ORIGINS || "http://localhost:5173"
-)
+const allowedOrigins = [
+    process.env.CORS_ORIGINS || "https://prep-flow-ai-powered-student-assess.vercel.app",
+    "http://localhost:5173"
+]
+    .join(",")
     .split(",")
     .map((origin) => origin.trim())
     .filter(Boolean);

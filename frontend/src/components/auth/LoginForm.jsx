@@ -1,9 +1,12 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../services/api";
+import { useAuth } from "../../context/AuthContext";
 
 const LoginForm = () => {
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const [formData, setFormData] = useState({
         email: "",
@@ -24,10 +27,9 @@ const LoginForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         setError("");
 
-        if (!formData.email || !formData.password) {
+        if (!formData.email.trim() || !formData.password) {
             setError("Please enter email and password.");
             return;
         }
@@ -36,70 +38,63 @@ const LoginForm = () => {
             setLoading(true);
 
             const response = await api.post("/auth/login", {
-                email: formData.email,
+                email: formData.email.trim(),
                 password: formData.password,
             });
 
-            console.log("Login response:", response.data);
+            const data = response.data;
 
-            /*
-             * Your backend should return the JWT token.
-             * We support both:
-             *
-             * response.data.token
-             *
-             * and
-             *
-             * response.data.data.token
-             */
+            // Support common backend response structures
+            const payload = data.data || data;
+
             const token =
-                response.data.token ||
-                response.data.data?.token;
+                payload.token ||
+                payload.accessToken ||
+                data.token ||
+                data.accessToken;
+
+            const user =
+                payload.student ||
+                payload.user ||
+                payload.admin ||
+                data.student ||
+                data.user ||
+                data.admin ||
+                null;
 
             if (!token) {
-                setError("Login successful, but token was not received.");
+                console.error("Login response:", data);
+                setError("Authentication token was not received.");
                 return;
             }
 
-            // Store JWT
-            localStorage.setItem("token", token);
+            // Store authenticated user and token
+            login(token, user);
 
-            // Store student information if backend returns it
-            if (response.data.student) {
-                localStorage.setItem(
-                    "student",
-                    JSON.stringify(response.data.student)
-                );
+            // Redirect according to role
+            const role = user?.role?.toLowerCase();
+
+            if (role === "admin") {
+                navigate("/admin", { replace: true });
+            } else if (role === "teacher") {
+                navigate("/teacher", { replace: true });
+            } else {
+                navigate("/dashboard", { replace: true });
             }
 
-            // Redirect to dashboard
-           // Get the logged-in user
-const student =
-    response.data.student ||
-    response.data.data?.student ||
-    response.data.user ||
-    response.data.data?.user;
-
-// Store student information
-if (student) {
-    localStorage.setItem("student", JSON.stringify(student));
-}
-
-// Redirect based on role
-if (student?.role === "admin") {
-    navigate("/admin", { replace: true });
-} else {
-    navigate("/dashboard", { replace: true });
-}
-
         } catch (error) {
-            console.error("Login error:", error);
+            console.error("Login error:", {
+                status: error.response?.status,
+                message: error.response?.data?.message,
+                response: error.response?.data,
+                url: error.config?.url,
+                baseURL: error.config?.baseURL,
+            });
 
-            const message =
+            setError(
                 error.response?.data?.message ||
-                "Login failed. Please check your credentials.";
-
-            setError(message);
+                "Login failed. Please check your credentials."
+            );
 
         } finally {
             setLoading(false);
@@ -108,16 +103,11 @@ if (student?.role === "admin") {
 
     return (
         <div className="login-form-container">
-
-            <form
-                className="login-form"
-                onSubmit={handleSubmit}
-            >
-
+            <form className="login-form" onSubmit={handleSubmit}>
                 <h2>Welcome Back</h2>
 
                 <p className="login-subtitle">
-                    Login to your student account
+                    Login to your PrepFlow account
                 </p>
 
                 {error && (
@@ -126,12 +116,8 @@ if (student?.role === "admin") {
                     </div>
                 )}
 
-                {/* Email */}
                 <div className="form-group">
-
-                    <label htmlFor="email">
-                        Email
-                    </label>
+                    <label htmlFor="email">Email</label>
 
                     <input
                         type="email"
@@ -140,18 +126,13 @@ if (student?.role === "admin") {
                         placeholder="Enter your email"
                         value={formData.email}
                         onChange={handleChange}
-                        autoComplete="email"
+                        autoComplete="username"
                         required
                     />
-
                 </div>
 
-                {/* Password */}
                 <div className="form-group">
-
-                    <label htmlFor="password">
-                        Password
-                    </label>
+                    <label htmlFor="password">Password</label>
 
                     <input
                         type="password"
@@ -163,10 +144,8 @@ if (student?.role === "admin") {
                         autoComplete="current-password"
                         required
                     />
-
                 </div>
 
-                {/* Login Button */}
                 <button
                     type="submit"
                     className="login-button"
@@ -175,16 +154,13 @@ if (student?.role === "admin") {
                     {loading ? "Logging in..." : "Login"}
                 </button>
 
-                {/* Register Link */}
                 <p className="register-link">
                     Don't have an account?{" "}
                     <Link to="/register">
                         Create an account
                     </Link>
                 </p>
-
             </form>
-
         </div>
     );
 };

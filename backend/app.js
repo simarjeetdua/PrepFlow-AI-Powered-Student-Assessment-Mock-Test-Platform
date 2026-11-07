@@ -22,7 +22,8 @@ const app = express();
 // Allowed frontend origins.
 const allowedOrigins = [
     process.env.CORS_ORIGINS || "https://prep-flow-ai-powered-student-assess.vercel.app",
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "http://localhost:5050",
 ]
     .join(",")
     .split(",")

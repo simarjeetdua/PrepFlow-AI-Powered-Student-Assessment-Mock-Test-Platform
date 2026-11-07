@@ -11,3 +11,4 @@ dist
 **/dist
 coverage
 *.log
+*.pem

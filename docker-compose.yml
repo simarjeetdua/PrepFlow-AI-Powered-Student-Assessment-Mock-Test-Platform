@@ -6,6 +6,8 @@ services:
     container_name: prepflow-backend
     env_file:
       - ./backend/.env
+    environment:
+      PORT: 5000
     ports:
       - "5000:5000"
     restart: unless-stopped
@@ -17,7 +19,7 @@ services:
         VITE_API_BASE_URL: http://localhost:5000/api
     container_name: prepflow-frontend
     ports:
-      - "5173:80"
+      - "5050:80"
     depends_on:
       - backend
     restart: unless-stopped

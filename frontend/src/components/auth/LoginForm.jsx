@@ -1,6 +1,16 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { 
+    GraduationCap, 
+    Mail, 
+    Lock, 
+    ArrowRight, 
+    LoaderCircle, 
+    AlertCircle, 
+    ShieldCheck,
+    Eye,
+    EyeOff
+} from "lucide-react";
 import api from "../../services/api";
 import { useAuth } from "../../context/AuthContext";
 
@@ -15,6 +25,7 @@ const LoginForm = () => {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -30,7 +41,7 @@ const LoginForm = () => {
         setError("");
 
         if (!formData.email.trim() || !formData.password) {
-            setError("Please enter email and password.");
+            setError("Please enter your email and password.");
             return;
         }
 
@@ -43,8 +54,6 @@ const LoginForm = () => {
             });
 
             const data = response.data;
-
-            // Support common backend response structures
             const payload = data.data || data;
 
             const token =
@@ -103,64 +112,113 @@ const LoginForm = () => {
 
     return (
         <div className="login-form-container">
-            <form className="login-form" onSubmit={handleSubmit}>
-                <h2>Welcome Back</h2>
+            {/* Ambient Background Glow */}
+            <div className="auth-ambient-glow" aria-hidden="true" />
 
-                <p className="login-subtitle">
-                    Login to your PrepFlow account
-                </p>
-
-                {error && (
-                    <div className="error-message">
-                        {error}
+            <div className="login-form-wrapper">
+                <form className="login-form" onSubmit={handleSubmit} noValidate>
+                    {/* Brand Header */}
+                    <div className="auth-brand-header">
+                        <div className="auth-logo-badge">
+                            <GraduationCap size={26} strokeWidth={2.2} />
+                        </div>
+                        <h2>Welcome back</h2>
+                        <p className="login-subtitle">
+                            Enter your credentials to access your PrepFlow account
+                        </p>
                     </div>
-                )}
 
-                <div className="form-group">
-                    <label htmlFor="email">Email</label>
+                    {/* Error Banner */}
+                    {error && (
+                        <div className="error-message" role="alert">
+                            <AlertCircle size={18} className="error-icon" />
+                            <span>{error}</span>
+                        </div>
+                    )}
 
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="Enter your email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        autoComplete="username"
-                        required
-                    />
-                </div>
+                    {/* Email Input */}
+                    <div className="form-group">
+                        <label htmlFor="email">Email address</label>
+                        <div className="input-with-icon">
+                            <Mail size={18} className="input-icon" />
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="name@example.com"
+                                value={formData.email}
+                                onChange={handleChange}
+                                autoComplete="username"
+                                disabled={loading}
+                                required
+                            />
+                        </div>
+                    </div>
 
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
+                    {/* Password Input */}
+                    <div className="form-group">
+                        <div className="password-label-row">
+                            <label htmlFor="password">Password</label>
+                        </div>
+                        <div className="input-with-icon">
+                            <Lock size={18} className="input-icon" />
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                autoComplete="current-password"
+                                disabled={loading}
+                                required
+                            />
+                            <button
+                                type="button"
+                                className="password-toggle-btn"
+                                onClick={() => setShowPassword(!showPassword)}
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                                tabIndex={-1}
+                            >
+                                {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+                            </button>
+                        </div>
+                    </div>
 
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Enter your password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        autoComplete="current-password"
-                        required
-                    />
-                </div>
+                    {/* Submit Button */}
+                    <button
+                        type="submit"
+                        className="login-button"
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <>
+                                <LoaderCircle size={18} className="animate-spin" />
+                                <span>Authenticating...</span>
+                            </>
+                        ) : (
+                            <>
+                                <span>Sign in</span>
+                                <ArrowRight size={18} />
+                            </>
+                        )}
+                    </button>
 
-                <button
-                    type="submit"
-                    className="login-button"
-                    disabled={loading}
-                >
-                    {loading ? "Logging in..." : "Login"}
-                </button>
+                    {/* Register Link */}
+                    <p className="register-link">
+                        Don't have an account?{" "}
+                        <Link to="/register">
+                            Create an account
+                        </Link>
+                    </p>
 
-                <p className="register-link">
-                    Don't have an account?{" "}
-                    <Link to="/register">
-                        Create an account
-                    </Link>
-                </p>
-            </form>
+                    {/* Security Footer */}
+                    <div className="auth-security-footer">
+                        <ShieldCheck size={14} />
+                        <span>Secure SSL enterprise authentication</span>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };

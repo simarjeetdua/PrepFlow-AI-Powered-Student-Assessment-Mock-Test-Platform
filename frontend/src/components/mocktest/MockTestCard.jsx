@@ -2,7 +2,8 @@ import {
     Clock,
     FileQuestion,
     ArrowRight,
-    BarChart3,
+    ClipboardList,
+    CheckCircle2,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -25,8 +26,8 @@ const MockTestCard = ({ test }) => {
     } = test;
 
     const testId = _id || id;
-
-    const difficultyClass = difficulty.toLowerCase();
+    const diffLower = (difficulty || "easy").toLowerCase();
+    const isPublished = String(status || "").toLowerCase() === "published";
 
     const handleStartTest = () => {
         if (!testId) {
@@ -39,85 +40,72 @@ const MockTestCard = ({ test }) => {
 
     return (
         <div className="mock-test-card">
+            {/* Card Header with Badges separated without overlapping */}
+            <div className="mock-test-card-top-row">
+                <div className="mock-test-badges-group">
+                    {/* Difficulty Badge: Emerald for Easy, Amber for Medium, Rose for Hard */}
+                    <span className={`difficulty-badge ${diffLower}`}>
+                        {difficulty}
+                    </span>
 
-            {/* Card Header */}
-            <div className="mock-test-card-header">
-                <div className="mock-test-icon">
-                    <BarChart3 size={22} />
+                    {/* Separate subtle Published / Status badge */}
+                    <span className={`status-badge-subtle ${isPublished ? "published" : "draft"}`}>
+                        <span className={`status-badge-dot ${isPublished ? "published" : "draft"}`} />
+                        {isPublished ? "Published" : (status || "Draft")}
+                    </span>
                 </div>
 
-                <span
-                    className={`difficulty-badge ${difficultyClass}`}
-                >
-                    {difficulty}
-                </span>
+                <div className="mock-test-card-icon-pill" aria-hidden="true">
+                    <ClipboardList size={16} strokeWidth={2.2} />
+                </div>
             </div>
 
-            {/* Test Information */}
-            <div className="mock-test-card-content">
-
-                <h3 className="mock-test-title">
+            {/* Test Content */}
+            <div className="mock-test-card-body">
+                <h3 className="mock-test-card-title" title={title}>
                     {title}
                 </h3>
 
-                <p className="mock-test-description">
-                    {description}
+                <p className="mock-test-card-desc">
+                    {description || "Comprehensive mock assessment designed to evaluate and sharpen core exam competencies."}
                 </p>
 
-                {/* Test Details */}
-                <div className="mock-test-details">
-
-                    <div className="mock-test-detail">
-                        <Clock size={17} />
-                        <span>
-                            {duration} min
-                        </span>
+                {/* Consistent Metadata Row */}
+                <div className="mock-test-meta-row">
+                    <div className="mock-test-meta-pill" title="Test Duration">
+                        <Clock size={15} className="meta-icon" strokeWidth={2} />
+                        <span>{duration} mins</span>
                     </div>
 
-                    <div className="mock-test-detail">
-                        <FileQuestion size={17} />
-                        <span>
-                            {totalQuestions} Questions
-                        </span>
+                    <div className="mock-test-meta-divider" aria-hidden="true" />
+
+                    <div className="mock-test-meta-pill" title="Total Questions">
+                        <FileQuestion size={15} className="meta-icon" strokeWidth={2} />
+                        <span>{totalQuestions} questions</span>
                     </div>
 
+                    <div className="mock-test-meta-divider" aria-hidden="true" />
+
+                    <div className="mock-test-meta-pill scoring-highlight" title="Scoring Breakdown">
+                        <CheckCircle2 size={15} className="meta-icon" strokeWidth={2} />
+                        <span>Instant Score</span>
+                    </div>
                 </div>
-
-                {/* Status */}
-                <div className="mock-test-status">
-                    <span
-                        className={`status-dot ${
-                            status === "Published"
-                                ? "published"
-                                : "draft"
-                        }`}
-                    ></span>
-
-                    {status}
-                </div>
-
             </div>
 
-            {/* Card Footer */}
-            <div className="mock-test-card-footer">
-
+            {/* Card Footer with Start Assessment Button */}
+            <div className="mock-test-card-actions">
                 <button
                     type="button"
-                    className="start-test-button"
+                    className="start-assessment-btn"
                     onClick={handleStartTest}
-                    disabled={status !== "Published"}
+                    disabled={!isPublished}
+                    title={isPublished ? `Start ${title}` : "This test is not currently available"}
                 >
-                    {status === "Published"
-                        ? "Start Test"
-                        : "Not Available"}
-
-                    {status === "Published" && (
-                        <ArrowRight size={17} />
-                    )}
+                    <span>{isPublished ? "Start Assessment" : "Currently Unavailable"}</span>
+                    {isPublished && <ArrowRight size={16} className="btn-arrow" strokeWidth={2.2} />}
                 </button>
-
             </div>
-
         </div>
     );
 };

@@ -1,5 +1,18 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { 
+    GraduationCap, 
+    User, 
+    Mail, 
+    Lock, 
+    ArrowRight, 
+    LoaderCircle, 
+    AlertCircle, 
+    CheckCircle2, 
+    ShieldCheck,
+    Eye,
+    EyeOff
+} from "lucide-react";
 import api from "../../services/api";
 
 const RegisterForm = () => {
@@ -14,6 +27,7 @@ const RegisterForm = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -31,7 +45,7 @@ const RegisterForm = () => {
         setSuccess("");
 
         // Basic frontend validation
-        if (!formData.name || !formData.email || !formData.password) {
+        if (!formData.name.trim() || !formData.email.trim() || !formData.password) {
             setError("Please fill in all fields.");
             return;
         }
@@ -45,15 +59,15 @@ const RegisterForm = () => {
             setLoading(true);
 
             const response = await api.post("/auth/register", {
-                name: formData.name,
-                email: formData.email,
+                name: formData.name.trim(),
+                email: formData.email.trim(),
                 password: formData.password,
             });
 
             console.log("Register response:", response.data);
 
             setSuccess(
-                response.data.message || "Registration successful!"
+                response.data.message || "Registration successful! Redirecting to login..."
             );
 
             // Clear form
@@ -66,7 +80,7 @@ const RegisterForm = () => {
             // Go to login after successful registration
             setTimeout(() => {
                 navigate("/login");
-            }, 1000);
+            }, 1200);
 
         } catch (error) {
             console.error("Registration error:", error);
@@ -84,112 +98,141 @@ const RegisterForm = () => {
 
     return (
         <div className="register-form-container">
+            {/* Ambient Background Glow */}
+            <div className="auth-ambient-glow" aria-hidden="true" />
 
-            <form
-                className="register-form"
-                onSubmit={handleSubmit}
-            >
-
-                <h2>Create Account</h2>
-
-                <p className="register-subtitle">
-                    Register as a student
-                </p>
-
-                {/* Error */}
-                {error && (
-                    <div className="error-message">
-                        {error}
+            <div className="register-form-wrapper">
+                <form className="register-form" onSubmit={handleSubmit} noValidate>
+                    {/* Brand Header */}
+                    <div className="auth-brand-header">
+                        <div className="auth-logo-badge">
+                            <GraduationCap size={26} strokeWidth={2.2} />
+                        </div>
+                        <h2>Create your account</h2>
+                        <p className="register-subtitle">
+                            Join PrepFlow to access practice tests, study materials, and AI tutoring
+                        </p>
                     </div>
-                )}
 
-                {/* Success */}
-                {success && (
-                    <div className="success-message">
-                        {success}
+                    {/* Feedback Messages */}
+                    {error && (
+                        <div className="error-message" role="alert">
+                            <AlertCircle size={18} className="error-icon" />
+                            <span>{error}</span>
+                        </div>
+                    )}
+
+                    {success && (
+                        <div className="success-message" role="status">
+                            <CheckCircle2 size={18} className="success-icon" />
+                            <span>{success}</span>
+                        </div>
+                    )}
+
+                    {/* Name Input */}
+                    <div className="form-group">
+                        <label htmlFor="name">Full name</label>
+                        <div className="input-with-icon">
+                            <User size={18} className="input-icon" />
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                placeholder="Jane Doe"
+                                value={formData.name}
+                                onChange={handleChange}
+                                autoComplete="name"
+                                disabled={loading}
+                                required
+                            />
+                        </div>
                     </div>
-                )}
 
-                {/* Name */}
-                <div className="form-group">
+                    {/* Email Input */}
+                    <div className="form-group">
+                        <label htmlFor="email">Email address</label>
+                        <div className="input-with-icon">
+                            <Mail size={18} className="input-icon" />
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="name@example.com"
+                                value={formData.email}
+                                onChange={handleChange}
+                                autoComplete="email"
+                                disabled={loading}
+                                required
+                            />
+                        </div>
+                    </div>
 
-                    <label htmlFor="name">
-                        Full Name
-                    </label>
+                    {/* Password Input */}
+                    <div className="form-group">
+                        <div className="password-label-row">
+                            <label htmlFor="password">Password</label>
+                            <span className="password-hint">Min 6 characters</span>
+                        </div>
+                        <div className="input-with-icon">
+                            <Lock size={18} className="input-icon" />
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                id="password"
+                                name="password"
+                                placeholder="Create a strong password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                autoComplete="new-password"
+                                minLength={6}
+                                disabled={loading}
+                                required
+                            />
+                            <button
+                                type="button"
+                                className="password-toggle-btn"
+                                onClick={() => setShowPassword(!showPassword)}
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                                tabIndex={-1}
+                            >
+                                {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+                            </button>
+                        </div>
+                    </div>
 
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Enter your full name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        autoComplete="name"
-                        required
-                    />
+                    {/* Submit Button */}
+                    <button
+                        type="submit"
+                        className="register-button"
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <>
+                                <LoaderCircle size={18} className="animate-spin" />
+                                <span>Creating Account...</span>
+                            </>
+                        ) : (
+                            <>
+                                <span>Get Started</span>
+                                <ArrowRight size={18} />
+                            </>
+                        )}
+                    </button>
 
-                </div>
+                    {/* Login Link */}
+                    <p className="login-link">
+                        Already have an account?{" "}
+                        <Link to="/login">
+                            Sign in instead
+                        </Link>
+                    </p>
 
-                {/* Email */}
-                <div className="form-group">
-
-                    <label htmlFor="email">
-                        Email
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="Enter your email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        autoComplete="email"
-                        required
-                    />
-
-                </div>
-
-                {/* Password */}
-                <div className="form-group">
-
-                    <label htmlFor="password">
-                        Password
-                    </label>
-
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Create a password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        autoComplete="new-password"
-                        minLength={6}
-                        required
-                    />
-
-                </div>
-
-                {/* Register button */}
-                <button
-                    type="submit"
-                    className="register-button"
-                    disabled={loading}
-                >
-                    {loading ? "Creating Account..." : "Register"}
-                </button>
-
-                {/* Login link */}
-                <p className="login-link">
-                    Already have an account?{" "}
-                    <Link to="/login">
-                        Login
-                    </Link>
-                </p>
-
-            </form>
-
+                    {/* Security Footer */}
+                    <div className="auth-security-footer">
+                        <ShieldCheck size={14} />
+                        <span>Secure SSL enterprise authentication</span>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };

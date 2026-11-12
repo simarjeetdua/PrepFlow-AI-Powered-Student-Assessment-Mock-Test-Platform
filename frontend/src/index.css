@@ -1,6 +1,67 @@
-/* =========================================
-   Global Reset
-========================================= */
+/* ============================================================
+   PrepFlow Enterprise SaaS Design System Foundation
+   Inspired by Linear, Vercel, Stripe, and Supabase
+   ============================================================ */
+
+:root {
+    /* Color Palette - Sleek Slate/Zinc & High-Contrast Neutrals */
+    --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    
+    --bg-page: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-surface-elevated: #ffffff;
+    --bg-surface-subtle: #f1f5f9;
+    --bg-surface-hover: #f8fafc;
+    
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --text-inverse: #ffffff;
+
+    --border-subtle: #e2e8f0;
+    --border-default: #cbd5e1;
+    --border-focus: #6366f1;
+
+    /* Controlled Brand Accent Palette */
+    --brand-indigo: #6366f1;
+    --brand-indigo-dark: #4f46e5;
+    --brand-indigo-light: #eef2ff;
+    --brand-indigo-glow: rgba(99, 102, 241, 0.25);
+
+    --brand-violet: #8b5cf6;
+    --brand-violet-dark: #7c3aed;
+    --brand-violet-light: #f5f3ff;
+
+    --brand-emerald: #10b981;
+    --brand-emerald-dark: #059669;
+    --brand-emerald-light: #ecfdf5;
+
+    --brand-amber: #f59e0b;
+    --brand-amber-light: #fffbeb;
+
+    --brand-rose: #f43f5e;
+    --brand-rose-dark: #e11d48;
+    --brand-rose-light: #fff1f2;
+
+    /* Metrics & Geometry */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-full: 9999px;
+
+    /* Elevation & Shadows */
+    --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -2px rgba(15, 23, 42, 0.04);
+    --shadow-lg: 0 12px 28px -4px rgba(15, 23, 42, 0.12), 0 4px 10px -2px rgba(15, 23, 42, 0.06);
+    --shadow-xl: 0 20px 40px -8px rgba(15, 23, 42, 0.16);
+
+    /* Transitions */
+    --ease-out-quad: cubic-bezier(0.16, 1, 0.3, 1);
+    --duration-fast: 150ms;
+    --duration-normal: 200ms;
+}
 
 *,
 *::before,
@@ -15,6 +76,7 @@ html {
     padding: 0;
     overflow-x: hidden;
     scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
 }
 
 body {
@@ -24,19 +86,10 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-
-    font-family:
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
-
-    background: #f8fafc;
-    color: #111827;
-
+    font-family: var(--font-sans);
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -51,7 +104,23 @@ body {
 }
 
 /* =========================================
-   Form Elements
+   Typography Utilities
+========================================= */
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+}
+
+p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* =========================================
+   Interactive Elements & Focus Rings
 ========================================= */
 
 button,
@@ -59,24 +128,116 @@ input,
 textarea,
 select {
     font: inherit;
+    color: inherit;
 }
 
 button {
     cursor: pointer;
+    border: none;
+    background: transparent;
+    user-select: none;
+    transition: all var(--duration-fast) var(--ease-out-quad);
 }
 
 button:disabled {
     cursor: not-allowed;
+    opacity: 0.6;
 }
 
 input,
 textarea,
 select {
     max-width: 100%;
+    transition: border-color var(--duration-fast) var(--ease-out-quad), box-shadow var(--duration-fast) var(--ease-out-quad);
+}
+
+:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--bg-surface), 0 0 0 4px var(--brand-indigo);
 }
 
 /* =========================================
-   Media
+   Custom Scrollbars
+========================================= */
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.4);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 116, 139, 0.6);
+}
+
+/* =========================================
+   Motion & Animation Keyframes
+========================================= */
+
+@keyframes enterFadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes enterScale {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulseSubtle {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes shimmerEffect {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin {
+    animation: spin 0.8s linear infinite;
+}
+
+.animate-fade-in {
+    animation: enterFadeSlide 0.25s var(--ease-out-quad) forwards;
+}
+
+/* =========================================
+   Media & Links
 ========================================= */
 
 img,
@@ -84,14 +245,13 @@ svg,
 video,
 canvas {
     max-width: 100%;
+    vertical-align: middle;
 }
-
-/* =========================================
-   Links
-========================================= */
 
 a {
     color: inherit;
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-out-quad);
 }
 
 /* =========================================
